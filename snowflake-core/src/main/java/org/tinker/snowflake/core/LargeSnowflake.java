@@ -1,4 +1,4 @@
-package org.tinker.snowflake;
+package org.tinker.snowflake.core;
 
 /**
  * A snowflake is a source of k-ordered unique 64-bit integers.

@@ -1,4 +1,4 @@
-package org.tinker.snowflake;
+package org.tinker.snowflake.core;
 
 /**
  * A snowflake is a source of k-ordered unique 64-bit integers.
@@ -36,27 +36,22 @@ public class SmallSnowflake {
      *
      * @return The next 64-bit integer.
      */
-    public long next() {
-
+    public synchronized long next() {
         long currentTime = this.getCurrentTimeMillis();
         long counter;
-
-        synchronized (this) {
-
-            if (currentTime < referenceTime) {
-                throw new RuntimeException(String.format("Last referenceTime %s is after reference time %s", referenceTime, currentTime));
-            } else if (currentTime > referenceTime) {
-                this.sequence = 0;
+        if (currentTime < referenceTime) {
+            throw new RuntimeException(String.format("Last referenceTime %s is after reference time %s", referenceTime, currentTime));
+        } else if (currentTime > referenceTime) {
+            this.sequence = 0;
+        } else {
+            if (this.sequence < SmallSnowflake.MAX_SEQUENCE) {
+                this.sequence++;
             } else {
-                if (this.sequence < SmallSnowflake.MAX_SEQUENCE) {
-                    this.sequence++;
-                } else {
-                    throw new RuntimeException("Sequence exhausted at " + this.sequence);
-                }
+                throw new RuntimeException("Sequence exhausted at " + this.sequence);
             }
-            counter = this.sequence;
-            referenceTime = currentTime;
         }
+        counter = this.sequence;
+        referenceTime = currentTime;
 
         return currentTime << NODE_SHIFT << SEQ_SHIFT | node << SEQ_SHIFT | counter;
     }

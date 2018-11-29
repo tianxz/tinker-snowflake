@@ -1,0 +1,9 @@
+logging:
+  path: _logs
+  level:
+    org.tinker: debug
+
+snowflake:
+  node:
+    large: 0
+    small: 0

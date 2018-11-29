@@ -1,2 +1,5 @@
 rootProject.name = 'snowflake'
+include 'snowflake-core'
+include 'snowflake-server'
+include 'snowflake-spring'
 
