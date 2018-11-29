@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'maven-publish'
+}
+
+group 'org.tinker'
+version '1.0.0-RELEASES'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            def snapshotsRepoUrl = "http://nexus.spread-dev.com/repository/maven-snapshots/"
+            def releasesRepoUrl = "http://nexus.spread-dev.com/repository/maven-releases/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username 'admin'
+                password 'admin'
+            }
+        }
+    }
+}
