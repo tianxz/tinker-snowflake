@@ -6,15 +6,14 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.tinker.snowflake.core.LargeSnowflake;
 import org.tinker.snowflake.core.SmallSnowflake;
-import sun.misc.Lock;
 
 import javax.annotation.PostConstruct;
 
 @Component
 public class SnowflakeComponent {
-    private final static Lock               largeSnowflakeLock = new Lock();
+    private final static Object             largeSnowflakeLock = new Object();
     private static       LargeSnowflake     largeSnowflake;
-    private final static Lock               smallSnowflakeLock = new Lock();
+    private final static Object             smallSnowflakeLock = new Object();
     private static       SmallSnowflake     smallSnowflake;
     private static       ApplicationContext context;
     private static       Environment        environment;
