@@ -73,4 +73,8 @@ task cp {
         from 'server'
         into '../snowflake-server'
     }
+    copy{
+        from "snowflake-server/build/libs/snowflake-server-${version}.jar"
+        into '../snowflake-server'
+    }
 }

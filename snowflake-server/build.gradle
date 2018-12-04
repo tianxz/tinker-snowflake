@@ -6,10 +6,3 @@ dependencies {
     compile project(':snowflake-spring')
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.1.0.RELEASE'
 }
-
-task cp {
-    copy {
-        from "build/libs/snowflake-server-${version}.jar"
-        into '../snowflake-server'
-    }
-}
