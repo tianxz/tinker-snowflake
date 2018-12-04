@@ -7,3 +7,6 @@ server:
 logging:
   level:
     org.tinker: debug
+  path: _logs
+  file:
+    max-size: 100MB
