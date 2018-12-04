@@ -5,5 +5,5 @@ logging:
 
 snowflake:
   node:
-    large: 0
-    small: 0
+    large: 0-1023
+    small: 0-1023
