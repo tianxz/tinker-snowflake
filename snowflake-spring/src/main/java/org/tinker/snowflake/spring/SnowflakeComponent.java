@@ -69,12 +69,9 @@ public class SnowflakeComponent {
             }
         }
 
-        long sid = smallSnowflakeArray[smallCurrentIndex].next();
         if (smallCurrentIndex > smallEnd) {
             smallCurrentIndex = smallStart;
-        } else {
-            smallCurrentIndex++;
         }
-        return sid;
+        return smallSnowflakeArray[smallCurrentIndex++].next();
     }
 }
