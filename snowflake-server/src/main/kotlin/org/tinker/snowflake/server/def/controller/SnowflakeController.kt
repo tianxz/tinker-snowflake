@@ -27,7 +27,7 @@ open class SnowflakeController {
 
     @GetMapping("/next-small")
     fun nextSmall(): String {
-        return SnowflakeComponent.nextLarge().toString()
+        return SnowflakeComponent.nextSmall().toString()
     }
 
     @GetMapping("/next-small-info")
