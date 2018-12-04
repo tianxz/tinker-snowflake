@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':snowflake-spring')
+    compile group: 'org.jodd', name: 'jodd-http', version: '5.0.6'
+
+}
