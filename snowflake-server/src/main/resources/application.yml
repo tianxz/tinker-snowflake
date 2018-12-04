@@ -1,7 +1,7 @@
 snowflake:
   node:
-    large: 0-1023
-    small: 0-1023
+    large: 0-5
+    small: 0-5
 server:
   port: 1010
 logging:
