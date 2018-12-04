@@ -1,11 +1,9 @@
-logging:
-  path: _logs
-  level:
-    org.tinker: debug
-
 snowflake:
   node:
     large: 0-1023
     small: 0-1023
 server:
   port: 1010
+logging:
+  level:
+    org.tinker: debug

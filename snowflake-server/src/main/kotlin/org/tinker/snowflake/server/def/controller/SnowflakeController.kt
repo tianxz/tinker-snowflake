@@ -16,7 +16,7 @@ open class SnowflakeController {
     @GetMapping("/next-large-info")
     fun nextLargeInfo(): String {
         var sf = SnowflakeDomain.resolverLarge(SnowflakeComponent.nextLarge())
-        logger.info("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
+        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
         return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
     }
 
@@ -33,7 +33,7 @@ open class SnowflakeController {
     @GetMapping("/next-small-info")
     fun nextSmallInfo(): String {
         var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
-        logger.info("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
+        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
         return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
     }
 }
