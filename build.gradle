@@ -71,6 +71,6 @@ subprojects {
 task cp {
     copy{
         from 'server'
-        to '../snowflake-server'
+        into '../snowflake-server'
     }
 }
