@@ -28,13 +28,18 @@ public class SnowflakeComponent {
 
     @PostConstruct
     private void init() {
-        this.environment = applicationContext.getEnvironment();
-        this.largeStart = Integer.valueOf(environment.getProperty("snowflake.node.large").split("-")[0]);
-        this.largeEnd = Integer.valueOf(environment.getProperty("snowflake.node.large").split("-")[1]);
-        this.largeCurrentIndex = this.largeStart;
-        this.smallStart = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[0]);
-        this.smallEnd = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[1]);
-        this.smallCurrentIndex = this.smallStart;
+        if (applicationContext != null) {
+            this.environment = applicationContext.getEnvironment();
+            if (environment.containsProperty("snowflake.node.large") &&
+                    environment.containsProperty("snowflake.node.large")) {
+                this.largeStart = Integer.valueOf(environment.getProperty("snowflake.node.large").split("-")[0]);
+                this.largeEnd = Integer.valueOf(environment.getProperty("snowflake.node.large").split("-")[1]);
+                this.largeCurrentIndex = this.largeStart;
+                this.smallStart = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[0]);
+                this.smallEnd = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[1]);
+                this.smallCurrentIndex = this.smallStart;
+            }
+        }
     }
 
     public static long nextLarge() {

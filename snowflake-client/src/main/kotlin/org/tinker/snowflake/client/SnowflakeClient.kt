@@ -1,4 +1,4 @@
-package org.tinker.tian.snowflake.client
+package org.tinker.snowflake.client
 
 import jodd.http.HttpRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,7 +22,8 @@ class SnowflakeClient {
         lateinit var environment: Environment
 
         fun next(): Long {
-            return HttpRequest.get("${environment.getProperty("snowflake.server.host")}:1010/sf/next-small")
+            var host = environment.getProperty("snowflake.server.host") ?: "localhost"
+            return HttpRequest.get("$host:1010/sf/next-small")
                     .send()
                     .body()
                     .toLong()
