@@ -18,8 +18,8 @@ case "$1" in
         then
                 echo "$PIDFILE does not exist, process is not running"
         else
-                kill $(cat ${SERVER_NAME}-1010.pid)
-                echo "wms server stopped"
+                kill $(cat ${SERVER_NAME}-${PORT}.pid)
+                echo "server stopped"
         fi
         ;;
     ss)

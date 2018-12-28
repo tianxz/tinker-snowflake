@@ -40,7 +40,7 @@ open class SnowflakeController {
 
     @GetMapping("/resolver/{sid}")
     fun resolver(@PathParam("sid") sid: Long): String {
-        var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
+        var sf = SnowflakeDomain.resolverSmall(sid)
         logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
         return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
     }
