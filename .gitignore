@@ -6,4 +6,4 @@ gradle/
 build/
 _logs/
 *.jar
-/publish
+publish
