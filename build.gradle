@@ -80,8 +80,3 @@ task cp {
         into '../snowflake-server'
     }
 }
-
-task shellTest(type: Exec) {
-    commandLine 'sh', 'chmod 777 publish'
-    commandLine 'sh', './publish'
-}
