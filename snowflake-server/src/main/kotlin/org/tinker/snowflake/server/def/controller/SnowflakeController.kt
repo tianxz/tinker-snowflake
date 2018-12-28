@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.tinker.snowflake.spring.SnowflakeComponent
 import org.tinker.snowflake.spring.SnowflakeDomain
 import java.time.format.DateTimeFormatter
+import javax.websocket.server.PathParam
 
 @RestController
 @RequestMapping("/sf")
@@ -32,6 +33,13 @@ open class SnowflakeController {
 
     @GetMapping("/next-small-info")
     fun nextSmallInfo(): String {
+        var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
+        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
+        return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
+    }
+
+    @GetMapping("/resolver/{sid}")
+    fun resolver(@PathParam("sid") sid: Long): String {
         var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
         logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
         return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
