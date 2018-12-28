@@ -1,8 +1,8 @@
 snowflake:
   node:
     # spread: 0-5
-    large: 1000-1023
-    small: 1000-1023
+    large: 1020-1023
+    small: 1020-1023
 server:
   port: 1010
 logging:

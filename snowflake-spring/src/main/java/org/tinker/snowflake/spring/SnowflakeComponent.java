@@ -71,7 +71,7 @@ public class SnowflakeComponent {
         if (smallSnowflakeArray == null) {
             synchronized (smallSnowflakeLock) {
                 if (smallSnowflakeArray == null) {
-                    smallSnowflakeArray = new SmallSnowflake[smallEnd - smallStart + 1];
+                    smallSnowflakeArray = new SmallSnowflake[smallEnd + 1];
                     for (int i = smallStart; i <= smallEnd; i++) {
                         smallSnowflakeArray[i] = new SmallSnowflake(i);
                     }
