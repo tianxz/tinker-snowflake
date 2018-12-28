@@ -1,5 +1,7 @@
 package org.tinker.snowflake.spring;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
@@ -22,6 +24,7 @@ public class SnowflakeComponent {
     private static       int              smallStart;
     private static       int              smallEnd;
     private static       int              smallCurrentIndex;
+    private static       Logger           logger             = LoggerFactory.getLogger(SnowflakeComponent.class);
 
     @Autowired
     ApplicationContext applicationContext;
@@ -38,7 +41,12 @@ public class SnowflakeComponent {
                 this.smallStart = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[0]);
                 this.smallEnd = Integer.valueOf(environment.getProperty("snowflake.node.small").split("-")[1]);
                 this.smallCurrentIndex = this.smallStart;
+                logger.info("Snowflake node large: {}-{}, small {}-{}", this.largeStart, this.largeEnd, this.smallStart, this.smallEnd);
+            } else {
+                logger.error("Not found snowflake.node.small and snowflake.node.small for environment");
             }
+        } else {
+            logger.error("Spring ApplicationContext is null");
         }
     }
 

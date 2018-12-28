@@ -9,11 +9,11 @@ EXEC=${JAR_NAME}
 PIDFILE=${SERVER_NAME}-${PORT}.pid
 
 case "$1" in
-    start)
+    st)
         echo "Starting wms server..."
         nohup java -jar -Dfile.encoding=UTF-8 $EXEC --server.port=${PORT} > /dev/null & echo $! > $PIDFILE
         ;;
-    stop)
+    sp)
         if [ ! -f $PIDFILE ]
         then
                 echo "$PIDFILE does not exist, process is not running"
@@ -22,13 +22,13 @@ case "$1" in
                 echo "wms server stopped"
         fi
         ;;
-    status)
+    ss)
         ps -ef|grep ${JAR_NAME}
         ;;
-    log)
+    lg)
         tail -f _logs/spring.log
         ;;
-    restart)
+    rt)
         "$0" stop
         sleep 3
         "$0" start
