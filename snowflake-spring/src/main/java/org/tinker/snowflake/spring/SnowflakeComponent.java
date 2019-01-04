@@ -13,10 +13,9 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class SnowflakeComponent {
+    private final static Logger           logger             = LoggerFactory.getLogger(SnowflakeComponent.class);
     private final static Object           largeSnowflakeLock = new Object();
-    private static       LargeSnowflake[] largeSnowflakeArray;
     private final static Object           smallSnowflakeLock = new Object();
-    private static       SmallSnowflake[] smallSnowflakeArray;
     private static       Environment      environment;
     private static       int              largeStart;
     private static       int              largeEnd;
@@ -24,7 +23,8 @@ public class SnowflakeComponent {
     private static       int              smallStart;
     private static       int              smallEnd;
     private static       int              smallCurrentIndex;
-    private static       Logger           logger             = LoggerFactory.getLogger(SnowflakeComponent.class);
+    private static       SmallSnowflake[] smallSnowflakeArray;
+    private static       LargeSnowflake[] largeSnowflakeArray;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -54,7 +54,7 @@ public class SnowflakeComponent {
         if (largeSnowflakeArray == null) {
             synchronized (largeSnowflakeLock) {
                 if (largeSnowflakeArray == null) {
-                    largeSnowflakeArray = new LargeSnowflake[largeEnd - largeStart + 1];
+                    largeSnowflakeArray = new LargeSnowflake[largeEnd + 1];
                     for (int i = largeStart; i <= largeEnd; i++) {
                         largeSnowflakeArray[i] = new LargeSnowflake(i);
                     }
@@ -64,7 +64,7 @@ public class SnowflakeComponent {
         if (largeCurrentIndex > largeEnd) {
             largeCurrentIndex = largeStart;
         }
-        return largeSnowflakeArray[largeCurrentIndex].next();
+        return largeSnowflakeArray[largeCurrentIndex++].next();
     }
 
     public static long nextSmall() {

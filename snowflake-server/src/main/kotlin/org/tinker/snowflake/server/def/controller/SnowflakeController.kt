@@ -16,10 +16,10 @@ open class SnowflakeController {
     private var logger = LoggerFactory.getLogger(SnowflakeController::class.java)
 
     @GetMapping("/next-large-info")
-    fun nextLargeInfo(): String {
+    fun nextLargeInfo(): SnowflakeDomain {
         var sf = SnowflakeDomain.resolverLarge(SnowflakeComponent.nextLarge())
         logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
-        return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
+        return sf
     }
 
     @GetMapping("/next-large")
@@ -33,16 +33,16 @@ open class SnowflakeController {
     }
 
     @GetMapping("/next-small-info")
-    fun nextSmallInfo(): String {
+    fun nextSmallInfo(): SnowflakeDomain {
         var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
         logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
-        return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
+        return sf
     }
 
     @GetMapping("/resolver/{sid}")
-    fun resolver(@PathVariable("sid") sid: Long): String {
+    fun resolver(@PathVariable("sid") sid: Long): SnowflakeDomain {
         var sf = SnowflakeDomain.resolverSmall(sid)
         logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
-        return "sid=${sf.sid}, dateTime=${sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"))}, timestamp=${sf.timestamp}, node=${sf.node}, sn=${sf.seq}"
+        return sf
     }
 }
