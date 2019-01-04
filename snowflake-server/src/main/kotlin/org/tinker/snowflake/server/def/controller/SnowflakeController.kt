@@ -15,16 +15,9 @@ import javax.websocket.server.PathParam
 open class SnowflakeController {
     private var logger = LoggerFactory.getLogger(SnowflakeController::class.java)
 
-    @GetMapping("/next-large-info")
-    fun nextLargeInfo(): SnowflakeDomain {
-        var sf = SnowflakeDomain.resolverLarge(SnowflakeComponent.nextLarge())
-        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
-        return sf
-    }
-
-    @GetMapping("/next-large")
-    fun nextLarge(): String {
-        return SnowflakeComponent.nextLarge().toString()
+    @GetMapping("/next")
+    fun next(): String {
+        return nextSmall()
     }
 
     @GetMapping("/next-small")
@@ -32,17 +25,33 @@ open class SnowflakeController {
         return SnowflakeComponent.nextSmall().toString()
     }
 
+    @GetMapping("/next-large")
+    fun nextLarge(): String {
+        return SnowflakeComponent.nextLarge().toString()
+    }
+
     @GetMapping("/next-small-info")
     fun nextSmallInfo(): SnowflakeDomain {
         var sf = SnowflakeDomain.resolverSmall(SnowflakeComponent.nextSmall())
-        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
+        this.log(sf)
+        return sf
+    }
+
+    @GetMapping("/next-large-info")
+    fun nextLargeInfo(): SnowflakeDomain {
+        var sf = SnowflakeDomain.resolverLarge(SnowflakeComponent.nextLarge())
+        this.log(sf)
         return sf
     }
 
     @GetMapping("/resolver/{sid}")
     fun resolver(@PathVariable("sid") sid: Long): SnowflakeDomain {
         var sf = SnowflakeDomain.resolverSmall(sid)
-        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
+        this.log(sf)
         return sf
+    }
+
+    fun log(sf: SnowflakeDomain) {
+        logger.debug("sid={}, dateTime={}, timestamp={}, node={}, sn={}", sf.sid, sf.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")), sf.timestamp, sf.node, sf.seq)
     }
 }
